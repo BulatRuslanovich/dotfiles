@@ -1,0 +1,26 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-width": 400,
+  "control-center-height": 600,
+  "widget-config": {
+    "notifications" :{},
+    "mpris": {},
+    "volume": {
+    "label": "",
+        "show-per-app": true,
+        "show-per-app-icon": true,
+        "show-per-app-label":true
+    },
+    "backlight": {
+      "label": "󰃟"
+    }
+  },
+  "widgets": [
+    "notifications",
+    "mpris",
+    "volume",
+    "backlight"
+  ]
+}
