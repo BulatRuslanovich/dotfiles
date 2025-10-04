@@ -1,0 +1,194 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 13,
+  "modules-left": ["custom/launcher", "clock", "hyprland/workspaces", "tray"],
+  "modules-center": ["custom/notification", "custom/media", "bluetooth"],
+  "modules-right": ["hyprland/language", "custom/vpn", "custom/weather", "pulseaudio", "backlight", "battery", "network", "power-profiles-daemon"],
+  "height": 40,
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "custom/launcher": {
+    "format": "",
+    "on-click": "bash $HOME/.config/waybar/scripts/app_launcher.sh",
+    "tooltip-format": "Launch your favorite apps"
+  },
+
+
+  "custom/media": {
+    "format": "{}",
+    "escape": true,
+    "return-type": "json",
+    "max-length": 40,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl stop",
+    "smooth-scrolling-threshold": 1,
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null"
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "Battery is at {capacity}%" 
+  },
+
+  "clock": {
+    "format": "󰥔 {:%I:%M %p}",
+    "format-alt": "󰥔 {:%a, %d. %b  %I:%M %p}",
+    "tooltip-format": "Date: {:%Y-%m-%d}"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "󰂱 {volume}%",
+    "format-muted": "󰖁",
+    "scroll-step": 1,
+    "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 10%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 10%-",
+    "ignored-sinks": ["Easy Effects Sink"],
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "󰋎",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰖀", "󰕾"]
+    },
+    "tooltip-format": "Volume: {volume}%"
+  },
+
+"pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": " Muted",
+    "on-click": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_SOURCE@ 5%+ --limit 1.15",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_SOURCE@ 5%-",
+  },
+
+  "network": {
+    "interface": "wlan0",
+    "format": "{ifname}",
+    "format-wifi": "{icon} {essid}",
+    "format-ethernet": "󰈀 {ipaddr}/{cidr}",
+    "format-disconnected": "󰤭  Disconnected",
+    "max-length": 50,
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format": "Connected to {essid}"
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10"
+    },
+    "persistent-workspaces": {
+      "*": 5 // 5 workspaces by default on every monitor
+    },
+    "sort-by-number": true
+  },
+
+  "tray": {
+    "icon-size": 12,
+    "spacing": 2,
+    "icons" : {
+        "brave" : "/usr/share/icons/Papirus/16x16/apps/brave.svg"
+    }
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"]
+  },
+
+  "custom/weather": {
+    "exec": "${HOME}/.config/waybar/scripts/get_weather.sh Kazan+Russia",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true,
+    "interval": 3600
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power mode: {profile}",
+    "tooltip": true,
+    "format-icons": {
+      "default": " def",
+      "performance": "󰠠 per",
+      "balanced": "󰚀 bal",
+      "power-saver": "󰌪 sav"
+    }
+  },
+
+  "hyprland/window": {
+    "format": "{class}",
+    "separate-outputs": true,
+    "icon": true,
+    "icon-size": 18
+},
+  
+
+  "bluetooth": {
+    "format": " {status}",
+    "format-disabled": " {status}",
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "blueman-manager",
+  },
+  
+  "custom/vpn": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
+    "interval": 5,
+    "tooltip": true
+  },
+
+  "hyprland/language": {
+        "format": "{}",
+        "format-en": "EN",
+        "format-ru": "RU",  
+        "keyboard-name": "at-translated-set-2-keyboard", 
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+        "tooltip": false 
+    }
+}

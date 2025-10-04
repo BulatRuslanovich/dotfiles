@@ -1,4 +1,6 @@
+bind -f common m toggle aaa_modec
 add ~/music/
+clear 
 clear
 colorscheme tokio
 colorscheme onedark

@@ -25,11 +25,6 @@
 (defpoll current-memory-detail :interval "10s" :initial "0" "~/.config/eww/scripts/get-memory-detail.sh")
 (defpoll current-music-seek :interval "1s" "~/.config/eww/scripts/get-music-seek.sh")
 
-(defpoll calendar-day :interval "10h" "date '+%d'")
-(defpoll calendar-month :interval "10h" "~/.config/eww/scripts/get-month.sh")
-(defpoll calendar-year :interval "10h" "date '+%Y'")
-(defpoll calendar-short :interval "10h" "date '+%b %d, %Y'")
-
 
 (include "widgets/resource-monitor.yuck")
 (include "widgets/custom-calendar.yuck")

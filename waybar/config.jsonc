@@ -1,15 +1,180 @@
 {
-  "layer": "top",
   "position": "top",
-  "margin-top": 13,
-  "modules-left": ["custom/launcher", "clock", "hyprland/workspaces"],
-  "modules-center": ["custom/notification", "custom/media"],
-  "modules-right": ["hyprland/language", "custom/vpn", "custom/weather", "pulseaudio", "battery", "network", "power-profiles-daemon"],
+  "output": "eDP-1",
+  "margin-left": 0,
+  "margin-right": 0,
   "height": 40,
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["group/time"],
+  "modules-right": [
+    "custom/notification",
+    "hyprland/language",
+    "group/zvuk",
+    "group/hardware",
+    "tray",
+    "group/wi-fi"
+  ],
+  "hyprland/window": {
+    "format": "{initialTitle}",
+    "max-length": 35,
+    "rewrite": {
+      "": "Hyprland",
+      "kitty": "Terminal",
+    },
+    "separate-outputs": false,
+  },
+  "hyprland/language": {
+    "format": "<span color=\"#DCA561\"></span>  {}",
+    "format-en": "EN",
+    "format-ru": "RU",
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+    },
+    "format": "{icon} {windows}",
+    "workspace-taskbar": {
+        "enable": true,
+        "format": "{icon}",
+        "icon-size": 18,
+    }
+  },
+
+
+
+
+  "group/wi-fi": {
+    "modules": ["network", "bluetooth", "custom/vpn"],
+    "orientation": "horizontal",
+  },
+
+  // Hardware info
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["cpu", "memory", "power-profiles-daemon"],
+  },
+  "cpu": {
+    "format": "<span color=\"#DCA561\"></span>  {usage}%",
+    "tooltip": false,
+  },
+  "memory": {
+    "format": "<span color=\"#DCA561\"></span>  {percentage}%",
+  },
+
+  // Audio info
+  "group/zvuk": {
+    "orientation": "horizontal",
+    "modules": ["pulseaudio#output", "pulseaudio#input", "battery"],
+  },
+  "pulseaudio#output": {
+    "format": "<span color=\"#DCA561\">{icon}</span>  {volume}%",
+    "format-muted": " ",
+    "format-icons": {
+      "headphone": "",
+      "default": ["", "", ""],
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+  },
+  "pulseaudio#input": {
+    "format": "{format_source}",
+    "format-source": "<span color=\"#DCA561\"></span> {volume}%",
+    "format-source-muted": " ",
+    "tooltip-format": "Fifine K680",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
+  },
+
+  // Time
+  "group/time": {
+    "modules": ["clock", "clock#simple"],
+    "orientation": "horizontal",
+  },
+  "clock#simple": {
+    "format": "{:%H:%M:%S}",
+    "tooltip": false,
+    "interval": 1,
+  },
+  "clock": {
+    "format": "{:L%a %d, %b %Y}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%d-%m-%Y}",
+  },
+
+  "privacy": {
+    "icon-size": 15,
+    "icon-spacing": 8,
+  },
+  "network": {
+    "format-wifi": "<span color=\"#DCA561\"> </span>",
+    "format-ethernet": "<span color=\"#DCA561\"> </span>",
+    "format-disconnected": "<span color=\"#DCA561\">⚠</span>",
+    "tooltip": false,
+  },
+  "tray": {
+    "spacing": 10,
+  },
+
+  "custom/vpn": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
+    "interval": 5,
+    "tooltip": true
+  },
+
+  "bluetooth": {
+    "format": "<span color=\"#DCA561\"></span> {status}",
+    "format-disabled": "<span color=\"#DCA561\"></span> {status}",
+    "format-connected": "<span color=\"#DCA561\"></span> {num_connections}",
+    "tooltip-format": "{device_alias}",
+    "format-connected-battery": "<span color=\"#DCA561\"></span> {device_alias} {device_battery_percentage}%",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "blueman-manager"
+  },
+
+  "power-profiles-daemon": {
+    "format": "<span color=\"#DCA561\">{icon}</span>",
+    "tooltip-format": "Power mode: {profile}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "󰠠",
+      "balanced": "󰚀",
+      "power-saver": "󰌪"
+    }
+  },
+
+  "battery": {
+    "format": "<span color=\"#DCA561\">{icon}</span> {capacity}%",
+    "format-charging": "<span color=\"#DCA561\">󰂄</span> {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "Battery is at {capacity}%" 
+  },
+
+  // "custom/media": {
+  //   "format": "{}",
+  //   "escape": true,
+  //   "return-type": "json",
+  //   "max-length": 40,
+  //   "on-click": "playerctl play-pause",
+  //   "on-click-right": "playerctl stop",
+  //   "smooth-scrolling-threshold": 1,
+  //   "on-scroll-up": "playerctl next",
+  //   "on-scroll-down": "playerctl previous",
+  //   "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null"
+  // },
 
   "custom/notification": {
     "tooltip": false,
-    "format": "{icon}",
+    "format": "<span color=\"#DCA561\">{icon}</span>",
     "format-icons": {
       "notification": "<span foreground='red'><sup></sup></span>",
       "none": "",
@@ -27,156 +192,4 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
-
-  "custom/launcher": {
-    "format": "",
-    "on-click": "bash /home/getname/.config/waybar/scripts/app_launcher.sh",
-    "tooltip-format": "Launch your favorite apps"
-  },
-
-
-  "custom/media": {
-    "format": "{}",
-    "escape": true,
-    "return-type": "json",
-    "max-length": 40,
-    "on-click": "playerctl play-pause",
-    "on-click-right": "playerctl stop",
-    "smooth-scrolling-threshold": 1,
-    "on-scroll-up": "playerctl next",
-    "on-scroll-down": "playerctl previous",
-    "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null"
-  },
-
-  "battery": {
-    "format": "{icon}  {capacity}%",
-    "format-charging": "󰂄  {capacity}%",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "tooltip-format": "Battery is at {capacity}%" 
-  },
-
-  "clock": {
-    "format": "󰥔  {:%I:%M %p}",
-    "format-alt": "󰥔  {:%a, %d. %b  %I:%M %p}",
-    "tooltip-format": "Date: {:%Y-%m-%d}"
-  },
-
-  "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-bluetooth": "󰂱 {volume}%",
-    "format-muted": "󰖁",
-    "scroll-step": 1,
-    "on-click": "pavucontrol",
-    "ignored-sinks": ["Easy Effects Sink"],
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "󰋎",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["󰖀", "󰕾"]
-    },
-    "tooltip-format": "Volume: {volume}%"
-  },
-
-  "network": {
-    "interface": "wlan0",
-    "format": "{ifname}",
-    "format-wifi": "{icon}  {essid}",
-    "format-ethernet": "󰈀  {ipaddr}/{cidr}",
-    "format-disconnected": "󰤭  Disconnected",
-    "max-length": 50,
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-    "tooltip-format": "Connected to {essid}"
-  },
-
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "on-click": "activate",
-    "format-icons": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10"
-    },
-    "persistent-workspaces": {
-      "*": 5 // 5 workspaces by default on every monitor
-    },
-    "sort-by-number": true
-  },
-
-  "backlight": {
-    "device": "intel_backlight",
-    "format": "{icon}   {percent}%",
-    "format-icons": ["󰃞", "󰃟", "󰃠"]
-  },
-
-  "custom/weather": {
-    "exec": "${HOME}/.config/waybar/scripts/get_weather.sh Kazan+Russia",
-    "return-type": "json",
-    "format": "{}",
-    "tooltip": true,
-    "interval": 3600
-  },
-
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power mode: {profile}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "",
-      "performance": "󰠠",
-      "balanced": "󰚀",
-      "power-saver": "󰌪"
-    }
-  },
-
-  "hyprland/window": {
-    "format": "{class}",
-    "separate-outputs": true,
-    "icon": true,
-    "icon-size": 18
-},
-  
-  "cpu": {
-    "interval": 10,
-    "format": "    {}%",
-    "max-length": 10
-  },
-
-  "memory": {
-    "interval": 30,
-    "format": "    {}%",
-    "max-length": 10
-  },
-
-  "disk": {
-    "interval": 30,
-    "format": "   {percentage_used}% used on {path}",
-    "path": "/home"
-  },
-
-  "custom/vpn": {
-    "format": "{}",
-    "return-type": "json",
-    "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
-    "interval": 5,
-    "tooltip": true
-  },
-
-  "hyprland/language": {
-        "format": "{}",
-        "format-en": "EN",
-        "format-ru": "RU",  
-        "keyboard-name": "at-translated-set-2-keyboard", 
-        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
-        "tooltip": false 
-    }
 }
