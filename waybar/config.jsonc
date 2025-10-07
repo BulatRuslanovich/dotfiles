@@ -58,7 +58,7 @@
   // Hardware info
   "group/hardware": {
     "orientation": "horizontal",
-    "modules": ["cpu", "memory", "power-profiles-daemon"],
+    "modules": ["power-profiles-daemon"],
   },
   "cpu": {
     "format": "<span color=\"#DCA561\"></span>  {usage}%",
@@ -116,7 +116,8 @@
     "format-wifi": "<span color=\"#DCA561\"> </span>",
     "format-ethernet": "<span color=\"#DCA561\"> </span>",
     "format-disconnected": "<span color=\"#DCA561\">⚠</span>",
-    "tooltip": false,
+    "on-click" : "bash $HOME/.config/hypr/scripts/wifi-menu.sh", 
+    "tooltip": true,
   },
   "tray": {
     "spacing": 10,
