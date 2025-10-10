@@ -47,9 +47,6 @@
     }
   },
 
-
-
-
   "group/wi-fi": {
     "modules": ["network", "bluetooth", "custom/vpn"],
     "orientation": "horizontal",
@@ -159,19 +156,6 @@
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "tooltip-format": "Battery is at {capacity}%" 
   },
-
-  // "custom/media": {
-  //   "format": "{}",
-  //   "escape": true,
-  //   "return-type": "json",
-  //   "max-length": 40,
-  //   "on-click": "playerctl play-pause",
-  //   "on-click-right": "playerctl stop",
-  //   "smooth-scrolling-threshold": 1,
-  //   "on-scroll-up": "playerctl next",
-  //   "on-scroll-down": "playerctl previous",
-  //   "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null"
-  // },
 
   "custom/notification": {
     "tooltip": false,
