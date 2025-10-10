@@ -1,10 +1,11 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "small",
+    "source": "~/.config/fastfetch/img.txt",
+    "type": "file",
     "padding": {
-      "top": 1,
-      "left" : 2 
+      "top": 0,
+      "left" : 1
     }
   },
 
@@ -20,7 +21,7 @@
         },
         {
             "key": "│ {#32}󰇅 os      {#keys}│",
-            "type": "os",
+            "type": "os"
         },
         {
             "key": "│ {#33}󰨇 de      {#keys}│",
@@ -30,7 +31,7 @@
         {
             "key": "│ {#35} pkgs    {#keys}│",
             "type": "packages",
-            "format": "{} (pacman)",
+            "format": "{} (pacman, yay)"
         },
         {
             "key": "│ {#32} shell   {#keys}│",
@@ -38,21 +39,21 @@
         },
         {
             "key": "│ {#33}󰍛 kernel  {#keys}│",
-            "type": "kernel",
+            "type": "kernel"
         },
         {
             "key": "│ {#34} uptime  {#keys}│",
             "type": "uptime",
-            "format": "{2}h {3}m",
+            "format": "{2}h {3}m"
         },
         {
             "key": "│ {#35}󰔟 os age  {#keys}│",
             "type": "command",
-            "text": "birth_install=$(stat -c %W /); current=$(date +%s);    days_difference=$(( (current - birth_install) / 86400 )); echo $days_difference days",
+            "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days"
         },
         {
             "key": "│ {#36} memory  {#keys}│",
-            "type": "memory",
+            "type": "memory"
         },
         {
             "key": "├───────────┤",
