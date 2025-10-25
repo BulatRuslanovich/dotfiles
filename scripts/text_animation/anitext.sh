@@ -1,7 +1,7 @@
 #!/bin/bash
 
 s=("Lol, hi, sigma!" "Windows for nubs?" "Saidash loh" "C# better then Java")
-scripttext=~/.config/hypr/scripts/text_animation/scripttext
+scripttext=~/.config/scripts/text_animation/scripttext
 ptx=0
 
 while [ $ptx -lt ${#s[@]} ]; do

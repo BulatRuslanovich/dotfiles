@@ -2,30 +2,28 @@
 {
     "label": "lock",
     "action": "hyprlock",
-    "text": "Lock"
-}
-
-{
-    "label": "suspend",
-        "action": "systemctl suspend",
-        "text": "Suspend"
+    "text": "Lock",
+    "keybind": "l"
 }
 
 {
     "label": "shutdown",
     "action": "systemctl poweroff",
     "text": "Shutdown"
+    "keybind": "s"
 }
 
 {
     "label": "reboot",
-        "action": "systemctl reboot",
-        "text": "Reboot"
+    "action": "systemctl reboot",
+    "text": "Reboot"
+    "keybind": "r"
 }
 
 
 {
     "label": "logout",
-        "action": "hyprctl dispatch exit 0",
-        "text": "Logout"
+    "action": "hyde-shell logout",
+    "text": "Logout"
+    "keybind": "e"
 }
