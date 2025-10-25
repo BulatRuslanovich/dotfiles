@@ -1,20 +1,20 @@
 #!/bin/bash
 
-# Скрипт для восстановления системы после переустановки
-# Восстанавливает все необходимые пакеты для корректной работы конфигов
+# Script for system restoration after reinstallation
+# Restores all necessary packages for proper config operation
 
 set -e
 
-echo "🚀 Начинаем восстановление системы..."
+echo "🚀 Starting system restoration..."
 
-# Цвета для вывода
+# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Функция для вывода сообщений
+# Function for message output
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
 }
@@ -31,9 +31,9 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Проверка наличия yay
+# Check for yay presence
 if ! command -v yay &> /dev/null; then
-    print_status "Устанавливаем yay..."
+    print_status "Installing yay..."
     cd /tmp
     git clone https://aur.archlinux.org/yay.git
     cd yay
@@ -41,11 +41,11 @@ if ! command -v yay &> /dev/null; then
     cd ~
 fi
 
-print_status "Обновляем базу данных пакетов..."
+print_status "Updating package database..."
 sudo pacman -Sy
 
-# Основные пакеты системы
-print_status "Устанавливаем основные системные пакеты..."
+# Main system packages
+print_status "Installing main system packages..."
 sudo pacman -S --noconfirm \
     base-devel \
     git \
@@ -53,8 +53,8 @@ sudo pacman -S --noconfirm \
     fastfetch \
     lsd
 
-# Wayland и композитор
-print_status "Устанавливаем Wayland и Hyprland..."
+# Wayland and compositor
+print_status "Installing Wayland and Hyprland..."
 sudo pacman -S --noconfirm \
     wayland \
     hyprland \
@@ -63,8 +63,8 @@ sudo pacman -S --noconfirm \
     xdg-desktop-portal-hyprland \
     xdg-desktop-portal-gtk
 
-# Шрифты
-print_status "Устанавливаем шрифты..."
+# Fonts
+print_status "Installing fonts..."
 sudo pacman -S --noconfirm \
     ttf-jetbrains-mono-nerd \
     ttf-font-awesome \
@@ -72,62 +72,62 @@ sudo pacman -S --noconfirm \
     noto-fonts-emoji \
     fontconfig
 
-# Аудио
-print_status "Устанавливаем аудио систему..."
+# Audio
+print_status "Installing audio system..."
 sudo pacman -S --noconfirm \
     pipewire \
     pipewire-pulse \
     pipewire-alsa \
     wireplumber
 
-# Сеть и Bluetooth
-print_status "Устанавливаем сетевые утилиты..."
+# Network and Bluetooth
+print_status "Installing network utilities..."
 sudo pacman -S --noconfirm \
     networkmanager \
     bluez \
     bluez-utils \
     blueman
 
-# Файловый менеджер
-print_status "Устанавливаем файловый менеджер..."
+# File manager
+print_status "Installing file manager..."
 sudo pacman -S --noconfirm \
     thunar \
     thunar-volman \
     gvfs
 
-# Терминал и оболочка
-print_status "Устанавливаем терминал и Fish shell..."
+# Terminal and shell
+print_status "Installing terminal and Fish shell..."
 sudo pacman -S --noconfirm \
     kitty \
     fish
 
-# Редактор
-print_status "Устанавливаем редактор..."
+# Editor
+print_status "Installing editor..."
 sudo pacman -S --noconfirm \
     neovim
 
-# Waybar и виджеты
-print_status "Устанавливаем Waybar и виджеты..."
+# Waybar and widgets
+print_status "Installing Waybar and widgets..."
 sudo pacman -S --noconfirm \
     waybar \
     swaync \
     wlogout
 
-# Запускатель
-print_status "Устанавливаем Rofi..."
+# Launcher
+print_status "Installing Rofi..."
 sudo pacman -S --noconfirm \
     rofi-wayland
 
-# Утилиты для скриншотов и медиа
-print_status "Устанавливаем утилиты для медиа..."
+# Screenshot and media utilities
+print_status "Installing media utilities..."
 sudo pacman -S --noconfirm \
     grim \
     slurp \
     wl-clipboard \
     mpv
 
-# Системные утилиты
-print_status "Устанавливаем системные утилиты..."
+# System utilities
+print_status "Installing system utilities..."
 sudo pacman -S --noconfirm \
     polkit \
     polkit-gnome \
@@ -135,37 +135,76 @@ sudo pacman -S --noconfirm \
     gtk4 \
     nwg-look
 
-# Управление питанием
-print_status "Устанавливаем управление питанием..."
+# Power management
+print_status "Installing power management..."
 sudo pacman -S --noconfirm \
     power-profiles-daemon
 
-# Дополнительные утилиты (для конфигов)
-print_status "Устанавливаем дополнительные утилиты..."
+# Additional utilities (for configs)
+print_status "Installing additional utilities..."
 sudo pacman -S --noconfirm \
     cava
 
-# AUR пакеты (если нужны)
-print_status "Устанавливаем AUR пакеты..."
-yay -S --noconfirm \
-    brave-bin \
-    visual-studio-code-bin
+# AUR packages (optional)
+echo ""
+print_status "Do you want to install additional applications from AUR? (y/n)"
+print_status "This includes: Brave Browser and Visual Studio Code"
+read -r aur_response
 
-# Настройка шрифтов
-print_status "Настраиваем шрифты..."
+if [[ "$aur_response" =~ ^[Yy]$ ]]; then
+    print_status "Installing AUR packages..."
+    yay -S --noconfirm \
+        brave-bin \
+        visual-studio-code-bin
+    print_success "AUR packages installed successfully!"
+else
+    print_status "Skipping AUR packages installation."
+fi
+
+# Font configuration
+print_status "Configuring fonts..."
 sudo fc-cache -fv
 
-# Настройка systemd сервисов
-print_status "Настраиваем systemd сервисы..."
+# Systemd services configuration
+print_status "Configuring systemd services..."
 sudo systemctl enable NetworkManager
 sudo systemctl enable bluetooth
 sudo systemctl enable power-profiles-daemon
 
-print_success "Система успешно восстановлена!"
-print_status "Не забудьте:"
-print_status "1. Скопировать ваши конфиги в ~/.config/"
-print_status "2. Перезагрузить систему"
-print_status "3. Запустить Hyprland командой: Hyprland"
+print_success "System successfully restored!"
+
+# Ask user if they want to copy configs automatically
+echo ""
+print_status "Do you want to copy the configs to ~/.config/ automatically? (y/n)"
+read -r response
+
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    print_status "Copying configs to ~/.config/..."
+
+    mkdir -p "$HOME/.config"
+    
+    for dir in */; do
+        if [ -d "$dir" ]; then
+            print_status "Copying $dir to ~/.config/"
+            cp -r "$dir" "$HOME/.config/"
+        fi
+    done
+    
+    for file in *.*; do
+        if [ -f "$file" ] && [ "$file" != "restore_system.sh" ]; then
+            print_status "Copying $file to ~/.config/"
+            cp "$file" "$HOME/.config/"
+        fi
+    done
+    
+    print_success "Configs copied successfully!"
+else
+    print_status "Skipping config copy. You can copy them manually later."
+fi
+
+print_status "Don't forget to:"
+print_status "1. Reboot the system"
+print_status "2. Start Hyprland with command: Hyprland"
 
 echo ""
-print_success "🎉 Восстановление завершено!"
+print_success "🎉 Restoration completed!"
