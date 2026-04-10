@@ -11,7 +11,6 @@
 @define-color cyan #7dcfff;
 @define-color blue #7aa2f7;
 @define-color purple #bb9af7;
-@define-color magenta #bb9af7;
 @define-color overlay #24283b;
 
 * {
@@ -20,15 +19,32 @@
   font-size: 1.01em;
 }
 
+/* Floating bar */
+
 window#waybar {
-  background-color: rgba(62, 62, 62, 0.27);
-  border-radius: 0;
+  background-color: rgba(26, 27, 38, 0.88);
+  border-radius: 12px;
+  border: 1px solid rgba(86, 95, 137, 0.3);
   transition-property: background-color;
   transition-duration: 0.5s;
 }
 
 window#waybar > box {
-  padding: 5px 0;
+  padding: 3px 0;
+}
+
+/* Tooltips */
+
+tooltip {
+  background-color: @background-alt;
+  border: 1px solid @selection;
+  border-radius: 8px;
+  color: @foreground;
+}
+
+tooltip label {
+  color: @foreground;
+  padding: 4px 8px;
 }
 
 button {
@@ -42,7 +58,7 @@ button:hover {
   border: none;
 }
 
-/* Workspaces styles */
+/* Workspaces */
 
 #workspaces {
   font-weight: 800;
@@ -57,23 +73,17 @@ button:hover {
   padding: 0 8px;
   color: inherit;
   background-color: transparent;
-  transition: 0.5s ease-out;
+  transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: @overlay;
 }
 
 #workspaces button.active {
-  background-color: @foreground-dark;
-  color: @background;
-}
-
-#workspaces button.active:nth-child(1) {
-  border-radius: 10px 0 0 10px;
-}
-#workspaces button.active:nth-last-child(1) {
-  border-radius: 0 10px 10px 0;
+  background-color: @selection;
+  color: @blue;
+  border-bottom: 2px solid @blue;
 }
 
 #workspaces button.urgent {
@@ -91,28 +101,27 @@ button:hover {
   border-radius: 0 10px 10px 0;
 }
 
-/* Hardware group styles */
+/* Hardware group */
 
 #hardware {
   margin-right: 5px;
 }
 
-#cpu {
-  padding-right: 10px;
-}
-
+#cpu,
 #memory {
-  padding-left: 10px;
+  padding: 6px 8px;
 }
 
-#power-profiles-daemon {
-  padding-left: 1px;
-  padding-right: 5px;
+/* Separator inside groups */
+
+#custom-separator {
+  color: @comment;
+  padding: 0 2px;
+  font-size: 0.8em;
 }
 
-/* Audio module styles */
+/* Audio */
 
-#wi-fi,
 #zvuk {
   background-color: @background;
   color: @foreground;
@@ -120,14 +129,15 @@ button:hover {
   margin-right: 5px;
 }
 
-#pulseaudio:hover {
-  background-color: @overlay;
-}
-
 #pulseaudio {
   font-weight: 700;
   padding: 6px 10px;
   border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+#pulseaudio:hover {
+  background-color: @overlay;
 }
 
 #pulseaudio.output.muted {
@@ -141,8 +151,8 @@ button:hover {
 
 #privacy {
   background-color: @background;
-  color: @power;
-  border: 1.5px solid @power;
+  color: @red;
+  border: 1.5px solid @red;
   padding: 6px 10px;
   border-radius: 10px;
   margin-right: 10px;
@@ -152,9 +162,14 @@ button:hover {
 
 #language {
   margin-right: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Time group styles */
+#language:hover {
+  background-color: @overlay;
+}
+
+/* Time group */
 
 #time {
   border-radius: 10px;
@@ -163,11 +178,9 @@ button:hover {
   color: @foreground;
 }
 
-
 #clock.simple {
   padding: 6px 10px;
-  background-color: @foreground-dark;
-  color: @background;
+  color: @blue;
   border-radius: 0 10px 10px 0;
   font-weight: 700;
 }
@@ -196,7 +209,6 @@ button:hover {
 #battery,
 #temperature,
 #network,
-#custom-vpn,
 #bluetooth,
 #hardware,
 #window,
@@ -207,17 +219,46 @@ button:hover {
   color: @foreground;
   padding: 6px 10px;
   border-radius: 10px;
+  transition: all 0.3s ease;
 }
+
+#network:hover,
+#bluetooth:hover,
+#battery:hover,
+#window:hover {
+  background-color: @overlay;
+}
+
+/* Battery states */
+
+#battery.warning {
+  color: @yellow;
+}
+
+#battery.critical {
+  color: @red;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.6; }
+}
+
+/* Notification */
 
 #custom-notification {
   font-weight: 700;
   background-color: @background;
   color: @foreground;
-  padding: 10px 17px;
+  padding: 6px 14px;
   border-radius: 10px;
   margin-right: 6px;
+  transition: all 0.3s ease;
 }
 
+#custom-notification:hover {
+  background-color: @overlay;
+}
 
 .modules-right {
   padding: 0 10px;

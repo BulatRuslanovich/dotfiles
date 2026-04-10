@@ -1,8 +1,9 @@
 {
   "position": "top",
   "output": "eDP-1",
-  "margin-left": 0,
-  "margin-right": 0,
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-top": 5,
   "height": 40,
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["group/time"],
@@ -12,8 +13,13 @@
     "group/zvuk",
     "group/hardware",
     "tray",
-    "group/wi-fi"
+    "bluetooth"
   ],
+
+  "custom/separator": {
+    "format": "|",
+    "tooltip": false
+  },
   "hyprland/window": {
     "format": "{initialTitle}",
     "max-length": 35,
@@ -24,7 +30,7 @@
     "separate-outputs": false,
   },
   "hyprland/language": {
-    "format": "<span color=\"#DCA561\"></span>  {}",
+    "format": "<span color=\"#ff9e64\"></span>  {}",
     "format-en": "EN",
     "format-ru": "RU",
   },
@@ -47,31 +53,26 @@
     }
   },
 
-  "group/wi-fi": {
-    "modules": ["network", "bluetooth", "custom/vpn"],
-    "orientation": "horizontal",
-  },
-
   // Hardware info
   "group/hardware": {
     "orientation": "horizontal",
-    "modules": ["power-profiles-daemon"],
+    "modules": ["battery", "custom/separator", "cpu", "custom/separator", "memory"],
   },
   "cpu": {
-    "format": "<span color=\"#DCA561\"></span>  {usage}%",
+    "format": "<span color=\"#7dcfff\"></span>  {usage}%",
     "tooltip": false,
   },
   "memory": {
-    "format": "<span color=\"#DCA561\"></span>  {percentage}%",
+    "format": "<span color=\"#7dcfff\"></span>  {percentage}%",
   },
 
   // Audio info
   "group/zvuk": {
     "orientation": "horizontal",
-    "modules": ["pulseaudio#output", "pulseaudio#input", "battery"],
+    "modules": ["pulseaudio#output", "pulseaudio#input"],
   },
   "pulseaudio#output": {
-    "format": "<span color=\"#DCA561\">{icon}</span>  {volume}%",
+    "format": "<span color=\"#bb9af7\">{icon}</span>  {volume}%",
     "format-muted": " ",
     "format-icons": {
       "headphone": "",
@@ -81,7 +82,7 @@
   },
   "pulseaudio#input": {
     "format": "{format_source}",
-    "format-source": "<span color=\"#DCA561\"></span> {volume}%",
+    "format-source": "<span color=\"#bb9af7\"></span> {volume}%",
     "format-source-muted": " ",
     "tooltip-format": "Fifine K680",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
@@ -109,57 +110,36 @@
     "icon-size": 15,
     "icon-spacing": 8,
   },
-  "network": {
-    "format-wifi": "<span color=\"#DCA561\"> </span>",
-    "format-ethernet": "<span color=\"#DCA561\"> </span>",
-    "format-disconnected": "<span color=\"#DCA561\">⚠</span>",
-    "on-click" : "bash $HOME/.config/hypr/scripts/wifi-menu.sh", 
-    "tooltip": true,
-  },
+
   "tray": {
     "spacing": 10,
   },
 
-  "custom/vpn": {
-    "format": "{}",
-    "return-type": "json",
-    "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
-    "interval": 5,
-    "tooltip": true
-  },
-
   "bluetooth": {
-    "format": "<span color=\"#DCA561\"></span> {status}",
-    "format-disabled": "<span color=\"#DCA561\"></span> {status}",
-    "format-connected": "<span color=\"#DCA561\"></span> {num_connections}",
+    "format": "<span color=\"#7aa2f7\"></span> {status}",
+    "format-disabled": "<span color=\"#7aa2f7\"></span> {status}",
+    "format-connected": "<span color=\"#7aa2f7\"></span> {num_connections}",
     "tooltip-format": "{device_alias}",
-    "format-connected-battery": "<span color=\"#DCA561\"></span> {device_alias} {device_battery_percentage}%",
+    "format-connected-battery": "<span color=\"#7aa2f7\"></span> {device_alias} {device_battery_percentage}%",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "on-click": "blueman-manager"
   },
-
-  "power-profiles-daemon": {
-    "format": "<span color=\"#DCA561\">{icon}</span>",
-    "tooltip-format": "Power mode: {profile}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "",
-      "performance": "󰠠",
-      "balanced": "󰚀",
-      "power-saver": "󰌪"
-    }
-  },
+  
 
   "battery": {
-    "format": "<span color=\"#DCA561\">{icon}</span> {capacity}%",
-    "format-charging": "<span color=\"#DCA561\">󰂄</span> {capacity}%",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span color=\"#9ece6a\">{icon}</span> {capacity}%",
+    "format-charging": "<span color=\"#9ece6a\">󰂄</span> {capacity}%",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "tooltip-format": "Battery is at {capacity}%" 
+    "tooltip-format": "{timeTo} | {capacity}%"
   },
 
   "custom/notification": {
     "tooltip": false,
-    "format": "<span color=\"#DCA561\">{icon}</span>",
+    "format": "<span color=\"#ff9e64\">{icon}</span>",
     "format-icons": {
       "notification": "<span foreground='red'><sup></sup></span>",
       "none": "",
